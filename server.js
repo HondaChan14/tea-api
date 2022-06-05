@@ -1,50 +1,50 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const express = require('express')
+const app = express()
 const cors = require('cors')
+const PORT = 8000
 
-app.use(cors());
+app.use(cors())
 
 const tea = {
     'oolong':{
         'type': 'black',
-        'origin': 'Yo Mamas House',
+        'origin': 'Yo mommas HOuse',
         'waterTemp': 200,
         'steepTimeSeconds': 180,
-        'caffinated': true, 
-        'flavor': 'delicous'
+        'caffinated': true,
+        'flavor': 'delicious'
     },
     'matcha':{
         'type': 'green',
-        'origin': 'Yo Mamas House',
+        'origin': 'Yo mommas HOuse',
         'waterTemp': 200,
         'steepTimeSeconds': 180,
-        'caffinated': false, 
-        'flavor': 'delicous'
+        'caffinated': false,
+        'flavor': 'delicious'
     },
-    'unknown': {
+    'unknown':{
         'type': 'unknown',
         'origin': 'unknown',
         'waterTemp': 0,
         'steepTimeSeconds': 0,
-        'caffinated': false, 
+        'caffinated': false,
         'flavor': 'unknown'
     }
 }
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + 'index.html')
+app.get('/', (request,response)=>{
+    response.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/:name', (req, res) => {
-    const teaName = req.params.name.toLowerCase()
-    if(tea[teaName]){ //if tea object has teaName (aka ooolong or matcha) then its true
-        res.json(tea[teaName])
+app.get('/api/:name', (request,response)=>{
+    const teaName = request.params.name.toLowerCase()
+    if( tea[teaName] ){
+       response.json(tea[teaName]) 
     }else{
-        res.json(tea['unknown'])
+        response.json(tea['unknown'])
     }
 })
 
-app.listen(PORT, () =>{
-    console.log(`Connected to Port ${PORT}!`)
+app.listen(process.env.PORT || PORT, ()=>{
+    console.log(`The server is running on port ${PORT}! Betta Go Catch It!`)
 })
